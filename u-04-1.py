@@ -28,6 +28,15 @@ def check_root_password_field(file_path):
         print(f"오류 발생: {e}")
         print("---------------------------------")
 
+def change_passwd_permissions():
+    try:
+        result = os.system('sudo chmod 640 /etc/passwd')
+        if result == 0:
+            print("권한이 성공적으로 변경되었습니다: /etc/passwd의 권한이 640으로 설정됨.")
+        else:
+            print("권한 변경 중 오류가 발생했습니다.")
+    except Exception as e:
+        print(f"오류 발생: {e}")
 
 def check_password_file_rule(file):
     # 파일 권한 정보를 가져옴
@@ -41,6 +50,7 @@ def check_password_file_rule(file):
         print(f"{file} 파일의 권한이 rw-r-----으로 설정되어 있습니다.")
     else:
         print(f"{file} 파일의 권한이 rw-r-----이 아닙니다. 현재 권한: {permissions}")
+        change_password_permissions()
 
 def check_passwd_file():
     file_path = '/etc/passwd'
