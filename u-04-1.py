@@ -22,5 +22,34 @@ def check_passwd_file():
     else:
         print(f"{file_path} 파일이 존재하지 않습니다.")
 
+def check_root_password_field():
+    file_path = '/etc/passwd'
+    
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                if line.startswith('root:'):
+                    fields = line.strip().split(':')
+                    if len(fields) > 1 and fields[1] == 'x':
+                        print("root의 두 번째 필드가 'x'입니다.")
+                    else:
+                        print("root의 두 번째 필드가 'x'가 아닙니다.")
+                    break
+            else:
+                print("root 사용자 정보를 찾을 수 없습니다.")
+    
+    except FileNotFoundError:
+        print("---------------------------------")
+        print(f"{file_path} 파일이 존재하지 않습니다.")
+        print("---------------------------------")
+    except Exception as e:
+        print("---------------------------------")
+        print(f"오류 발생: {e}")
+        print("---------------------------------")
+
+# 함수 실행
+check_root_password_field()
+
+
 # 파일 존재 확인 실행
 check_passwd_file()
