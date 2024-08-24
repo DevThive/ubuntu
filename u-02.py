@@ -1,5 +1,4 @@
 import re
-import os
 
 def check_password_complexity(file_path='/etc/login.defs'):
     """
@@ -15,10 +14,6 @@ def check_password_complexity(file_path='/etc/login.defs'):
         "MIN_LOWERCASE": 1,  # 최소 소문자 사용 횟수
         "MIN_UPPERCASE": 1,  # 최소 대문자 사용 횟수
     }
-
-    if not os.path.exixst(file_path):
-        return f"파일이 존재하지 않습니다."
-        
 
     try:
         with open(file_path, 'r') as file:
@@ -46,19 +41,19 @@ def check_password_complexity(file_path='/etc/login.defs'):
 
         # 정책 검증 로직
         results = []
-        if policy['PASS_MIN_LEN'] < 8:
-            results.append("비밀번호 최소 길이가 너무 짧습니다. (현재 설정: {})".format(policy['PASS_MIN_LEN']))
-        if policy['MIN_SPECIAL_CHARS'] < 2:
+        if policy['PASS_MIN_LEN'] is None or policy['PASS_MIN_LEN'] < 8:
+            results.append("비밀번호 최소 길이가 잘못 설정되어 있거나 없습니다.")
+        if policy['MIN_SPECIAL_CHARS'] is None or policy['MIN_SPECIAL_CHARS'] < 2:
             results.append("비밀번호는 최소 2개의 특수 문자를 포함해야 합니다. (현재 설정: {})".format(policy['MIN_SPECIAL_CHARS']))
-        if policy['MIN_LOWERCASE'] < 1:
+        if policy['MIN_LOWERCASE'] is None or policy['MIN_LOWERCASE'] < 1:
             results.append("비밀번호는 최소 1개의 소문자를 포함해야 합니다. (현재 설정: {})".format(policy['MIN_LOWERCASE']))
-        if policy['MIN_UPPERCASE'] < 1:
+        if policy['MIN_UPPERCASE'] is None or policy['MIN_UPPERCASE'] < 1:
             results.append("비밀번호는 최소 1개의 대문자를 포함해야 합니다. (현재 설정: {})".format(policy['MIN_UPPERCASE']))
 
-        if not results:
-            return "비밀번호 복잡성 설정이 정상적으로 설정되었습니다."
-        else:
+        if results:
             return "\n".join(results)
+        else:
+            return "비밀번호 복잡성 설정이 정상적으로 설정되었습니다."
 
     except FileNotFoundError:
         return f"파일을 찾을 수 없습니다: {file_path}"
