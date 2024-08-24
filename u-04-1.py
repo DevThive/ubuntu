@@ -8,10 +8,14 @@ def check_root_password_field(file_path):
                 if line.startswith('root:'):
                     fields = line.strip().split(':')
                     if len(fields) > 1 and fields[1] == 'x':
+                        print("---------------------------------")
                         print("root의 두 번째 필드가 'x'입니다.")
+                        print("---------------------------------")
                     else:
+                        print("---------------------------------")
                         print("root의 두 번째 필드가 'x'가 아닙니다.")
-                    break
+                        print("---------------------------------")
+                     break
             else:
                 print("root 사용자 정보를 찾을 수 없습니다.")
     
