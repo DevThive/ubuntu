@@ -9,10 +9,10 @@ def check_password_complexity(file_path='/etc/login.defs'):
     """
     # 설정 기본값
     policy = {
-        "PASS_MIN_LEN": 8,  # 최소 길이
-        "MIN_SPECIAL_CHARS": 1,  # 최소 특수 문자 사용 횟수
-        "MIN_LOWERCASE": 1,  # 최소 소문자 사용 횟수
-        "MIN_UPPERCASE": 1,  # 최소 대문자 사용 횟수
+        "PASS_MIN_LEN": None,  # 최소 길이
+        "MIN_SPECIAL_CHARS": None,  # 최소 특수 문자 사용 횟수
+        "MIN_LOWERCASE": None,  # 최소 소문자 사용 횟수
+        "MIN_UPPERCASE": None,  # 최소 대문자 사용 횟수
     }
 
     vulnerability_messages = []
